@@ -1,7 +1,8 @@
 import axios from 'axios';
 import axiosWithAuth from '../utilities/axiosWithAuth';
 import { ERROR, types } from './index';
-require("dotenv").config();
+
+
 
 const {
   LOGIN_START,
@@ -17,16 +18,26 @@ const {
   INFO_FAILURE,
 
 } = types;
-
-const Url = "http://localhost:9000"
-
+// const db = require('db');
+// debugger
+// db.connect({
+//   apiUrl: process.env.URL,
+//   AuthClient: process.env.AUTH_CLIENT,
+//   AuthSecret: process.env.AUTH_SECRET
+// })
+const Url = "http://localhost:9000";
+// // const Url = process.env.API_URL
+const AuthClient = process.env.REACT_APP_AUTH_CLIENT
+// // const AuthSecret = process.env.REACT_APP_AUTH_SECRET
+// const AuthClient = process.env.AUTH_CLIENT || "POOP";
+// const AuthSecret = "doge"
 
 export const loginUser = (data, history) => {
   const bodyData = new FormData();
   bodyData.set('username', data.username);
   bodyData.set('password', data.password);
   bodyData.set('grant_type', 'password');
-
+  console.log("AuthClient", AuthClient)
   console.log(Url)
 
   // const headers = new Headers();
@@ -41,7 +52,7 @@ export const loginUser = (data, history) => {
       data: bodyData,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${btoa('doge:doge')}`
+        Authorization: `Basic ${btoa("doge:doge")}`
       }
     })
       .then(res => {

@@ -12,7 +12,10 @@ import storage from 'redux-persist/lib/storage';
 import {persistStore, persistReducer} from 'redux-persist';
 //PersistGate wrapped around root component
 import {PersistGate} from 'redux-persist/integration/react';
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+require("dotenv").config();
+console.log("Dotenv", require("dotenv").config())
 
 const persistConfig = {
   key: 'root',
