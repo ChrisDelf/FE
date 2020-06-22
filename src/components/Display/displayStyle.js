@@ -10,9 +10,8 @@ export const Container = styled.div`
   height: 100vh;
   .buttonContainer {
     justify-content: center;
-   
   }
-  .mapContainer{
+  .mapContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,17 +21,17 @@ export const Container = styled.div`
     width: 70%;
     background: gray;
   }
-  .mapButton{
-  margin: 10px;
-  width: 90%;
-  background: lightgray;
+  .mapButton {
+    margin: 10px;
+    width: 90%;
+    background: lightgray;
   }
 
-  .title{
-  color: white;
-  font-size: 3rem;
+  .title {
+    color: white;
+    font-size: 3rem;
   }
-  .dungeonCon{
-  height: 70%;
+  .dungeonCon {
+    height: 70%;
   }
 `;
