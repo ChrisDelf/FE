@@ -1,52 +1,48 @@
 import React, {useEffect, useState} from 'react';
-import { connect } from 'react-redux';
-import { setMapId, movePlayer, getPlayerLocation, setRefresh} from "../../actions/charActions";
-import Keypad from "../Keypad/keypad";
+import {connect} from 'react-redux';
+import {
+  setMapId,
+  movePlayer,
+  getPlayerLocation,
+  setRefresh,
+} from '../../actions/charActions';
+import Keypad from '../Keypad/keypad';
+import {Container} from './gameStyle';
 
-
-const GameDisplay = (props) =>
-{
-  const [grid, setGrid] = useState([[]])
-  const [gridId, setGridId] = useState()
+const GameDisplay = props => {
+  const [grid, setGrid] = useState([[]]);
+  const [gridId, setGridId] = useState();
   const [player, setPlayer] = useState({
     x: props.playerX,
     y: props.playerY,
-  })
-  const[gridWidth, setGridWidth] = useState();
-  const[gridHeight, setGridHeight] = useState();
+  });
+  const [gridWidth, setGridWidth] = useState();
+  const [gridHeight, setGridHeight] = useState();
   // const[ refresh, setRefresh] = useState(false);
 
-
   function selectMap() {
-
-    if(props.maps.length !== null) {
+    if (props.maps.length !== null) {
       for (let i = 0; i < props.maps.length; i++) {
         if (props.maps[i].mapid === props.mapid) {
-          props.setMapId(props.mapid)
-          setGrid(props.maps[i])
-          setGridWidth(props.maps[i].width)
-          setGridHeight(props.maps[i].height)
+          props.setMapId(props.mapid);
+          setGrid(props.maps[i]);
+          setGridWidth(props.maps[i].width);
+          setGridHeight(props.maps[i].height);
           props.getPlayerLocation(props.playerMapId);
-
 
           setPlayer({
             x: props.playerX,
-            y: props.playerY
-          })
-
-
+            y: props.playerY,
+          });
         }
       }
     }
   }
 
   useEffect(() => {
-    selectMap()
-    props.setRefresh(false)
-
-
-
-  }, [props.refresh])
+    selectMap();
+    props.setRefresh(false);
+  }, [props.refresh]);
 
   // const displayGrid = []
   //
@@ -61,54 +57,51 @@ const GameDisplay = (props) =>
   //   displayGrid.push(row);
   // }
 
-  return(
-      <>
-      {/*<div>{props.mapid}</div>*/}
+  return (
+    <Container className="container">
+      <div>{props.mapid}</div>
       {/*  <button onClick={ () => {props.getPlayerLocation(props.playerMapId)}}>Geting player location</button>*/}
       {/*  <button onClick={ () => {props.movePlayer(player, props.playerMapId)}}>Testing player movement</button>*/}
 
-        { grid.grid !== undefined && grid.grid !== null ? (grid.grid.map(row => (
-            <div style={{ height: 22 }}>
-              {row.map(cell => {
-                let color = '';
-                if (cell.roomType === 'Floor') {
-                  color = 'brown';
-                }
-                if (cell.roomType === 'Door') {
-                  color = 'gray';
-                }
-                if (cell.roomType === 'Wall') {
-                  color = 'black';
-                }
-                if (cell.x === player.x && cell.y === player.y) {
-                  color = 'yellow';
-                }
-                return (
-                    <div
-                        style={{
-                          backgroundColor: color,
-                          width: 22,
-                          height: 22,
-                          display: 'inline-block'
-                        }}
-                    />
-                );
-              })}
-            </div>
+      {grid.grid !== undefined && grid.grid !== null ? (
+        grid.grid.map(row => (
+          <div style={{height: 10}}>
+            {row.map(cell => {
+              let color = '';
+              if (cell.roomType === 'Floor') {
+                color = 'brown';
+              }
+              if (cell.roomType === 'Door') {
+                color = 'gray';
+              }
+              if (cell.roomType === 'Wall') {
+                color = 'black';
+              }
+              if (cell.x === player.x && cell.y === player.y) {
+                color = 'yellow';
+              }
+              return (
+                <div
+                  style={{
+                    backgroundColor: color,
+                    width: 10,
+                    height: 10,
+                    display: 'inline-block',
+                  }}
+                />
+              );
+            })}
+          </div>
         ))
-
-        ):(<div>Loading</div>)}
-        <div>
-          <Keypad   setPlayer={setPlayer} player = {player} grid = {grid}/>
-        </div>
-        </>
-
-
-
-);
-
-}
-
+      ) : (
+        <div>Loading</div>
+      )}
+      <div>
+        <Keypad setPlayer={setPlayer} player={player} grid={grid} />
+      </div>
+    </Container>
+  );
+};
 
 const mapStateToProps = state => {
   return {
@@ -119,6 +112,11 @@ const mapStateToProps = state => {
     isLoading: state.charReducer.isLoading,
     refresh: state.charReducer.refresh,
   };
-}
+};
 
-export default connect( mapStateToProps, {setMapId, movePlayer, getPlayerLocation, setRefresh}, )(GameDisplay);
+export default connect(mapStateToProps, {
+  setMapId,
+  movePlayer,
+  getPlayerLocation,
+  setRefresh,
+})(GameDisplay);
